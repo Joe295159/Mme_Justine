@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Authenticate</title>
+	<meta charset="utf-8">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- BootStrap -->
+
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	
+	<!-- angular -->
+
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-cookies.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-sanitize.js"></script>
+
+	<!-- infinite scroll -->
+
+	<script src="js/shared/ng-infinite-scroll.min.js"></script>
+
+	
+</head>
+<body ng-app="Blogger">
+
+<div id ="inputPassword" ng-controller ="PrivateController">
+	Password: <input type="text" name="password" id="password"><br>
+	<button id="sendPassword" type="button" class="btn btn-default" data-target="#editPost" ng-click="authenticate()">Enter</button>
+
+</div>
+
+
+
+
+<!-- scripts -->
+<!-- Modules -->
+<script src="js/app.js"></script>
+
+<!-- Controllers -->
+<script src="js/controllers/PrivateController.js"></script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- BootStrap -->
+
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	
+
+	<!-- jquery -->
+
+	<!-- <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script> -->
+
+	<!-- angular -->
+
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-cookies.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-sanitize.js"></script>
+
+	<!-- infinite scroll -->
+
+	<script src="js/shared/ng-infinite-scroll.min.js"></script>
+
+	<!-- CSS -->
+
+	<link rel="stylesheet" href="css/admin.css">	
+
+
+</head>
+<body ng-app="Blogger">
+	
+	<div id ="behind"></div>
+	<div id="wrap">
+		<!-- NAVBAR -->
+		<div id="separator"></div>
+		<a href="/index.html"><img id="mainsign" src="/images/mainsign.png" ></a>
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="navbar-header">
+			
+			<div id="buttoner">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" 
+					data-target="#example-navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			
+		</div>
+		<div class="collapse navbar-collapse" id="example-navbar-collapse">
+			<ul class="nav navbar-nav barer">
+				<li class="active navbut"><a href="/index.html">Accueil</a></li>
+				<li class="navbut"><a href="/files.html">Fichiers</a></li>
+				<li class="navbut"><a href="/links.html">Liens</a></li>
+				<li class="navbut"><a href="/calendar.html">Calendrier</a></li>
+				<li class="navbut"><a href="/contact.html">Contact</a></li>
+			</ul>
+			<img id="racoon" src="/images/racoon.png" >
+		</div>
+	</nav>
+	<img id="moose" src="/images/moose.png" >
+	<img id="forest" src="/images/forestlake.png" >
+	<img id="cloud1" src="/images/cloud.png" >
+	<img id="squirelbranch" src="/images/squirelbranch.png" >
+	<img id="cloud3" src="/images/cloud.png" >
+	<!-- BLOG POSTS -->
+
+
+	<div id="feed" >
+		<div class="main" ng-controller="MainController">
+			<div infinite-scroll='blogit.nextPage()' infinite-scroll-disabled='blogit.busy' infinite-scroll-distance='1'>
+				<div class="blogPosts" ng-repeat="badge in blogit.items">
+				<div class="blogborder">
+					<p><div id="id"><h4>{{badge.id}}</h4> </div>
+						<div id="post" ng-bind-html="badge.post"><h5>{{badge.post}}</h5></div>
+						<div id="date"><h6>{{badge.date}}</h6></div>
+						</p>
+						<button id="{{badge.id}}" type="button" class="btn btn-default" data-toggle="modal" data-target="#editPost" ng-click="dataModal(badge)" ng-show="hideEdit()" ng-cloak>Edit</button>
+				</div>
+					</div>
+				
+					 <div ng-show='blogit.busy'>Loading data...</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- FOOTER -->
+
+	</div>
+	<div id="footer"  ng-controller="MainController">
+		<div class="container">
+			<button id = "newpost" type="button" class="btn btn-default" data-toggle="modal" data-target="#writepost" ng-show="hideEdit()" ng-cloak>New Post</button>
+			<button id = "logout" type="button" class="btn btn-default" ng-click="logOut()" ng-show="hideEdit()" ng-cloak>Logout</button>
+		</div>
+	</div>
+
+	<!-- Modal Edit POST-->
+
+	<div id="editPost" class="modal fade" role="dialog" ng-controller="EditController">>
+
+		<div class="modal-dialog">
+
+
+
+			<!-- Modal content-->
+
+			<div class="modal-content">
+
+						<div class="modal-header">
+
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+
+							<h4 class="modal-title">Edit Post</h4>
+
+							<div class="form-group">
+									<div id="originalTitle"> </div>
+								  <label for="usr">Title:</label>
+								  <input type="text" class="form-control" id="editTitle">
+							</div>
+							
+							<form class="form-inline">
+								<label for="rg-from">Type:  </label>
+								<label class="radio-inline"><input type="radio" name="postType" value = "file" id="editRadioFile">File</label>
+								<label class="radio-inline"><input type="radio" name="postType" value = "link" id="editRadioLink">Link</label>
+								<label class="radio-inline"><input type="radio" name="postType" value = "other" id="editRadioOther">Other</label>
+							</form>
+							
+						</div>
+
+						<div class="modal-body">
+
+							<div class="form-group">
+							  <label for="usr">Text:</label>
+							  <textarea type="text" class="form-control" id="editText"></textarea>
+							</div>
+
+						</div>
+
+						<div class="modal-footer">
+							
+							<button ng-click="editPost()" type="button" class="btn btn-default" data-loading-text="Saving..." id = "editButton">Save</button>
+							<button ng-click="deletePost()" type="button" class="btn btn-default" data-loading-text="Deleting..." id = "deleteButton">Delete</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+
+						</div>
+
+					</div>
+			</div>
+
+			</div>
+
+			<!-- Modal New POST-->
+
+			<div id="writepost" class="modal fade" role="dialog" ng-controller="PostController">
+
+				<div class="modal-dialog">
+
+
+
+					<!-- Modal content-->
+
+					<div class="modal-content">
+
+						<div class="modal-header">
+
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+
+							<h4 class="modal-title">New Post</h4>
+
+							<div class="form-group">
+								  <label for="usr">Title:</label>
+								  <input type="text" class="form-control" id="postTitle">
+							</div>
+							
+							<form class="form-inline">
+								<label for="rg-from">Type:  </label>
+								<label class="radio-inline"><input type="radio" name="postType" value = "file">File</label>
+								<label class="radio-inline"><input type="radio" name="postType" value = "link">Link</label>
+								<label class="radio-inline"><input checked type="radio" name="postType" value = "other">Other</label>
+							</form>
+							
+						</div>
+
+						<div class="modal-body">
+
+							<div class="form-group">
+							  <label for="usr">Text:</label>
+							  <textarea type="text" class="form-control" id="postText"></textarea>
+							</div>
+
+						</div>
+
+						<div class="modal-footer">
+							
+							<button ng-click="sendPost()" type="button" class="btn btn-default" data-loading-text="Saving..." id = "postButton">Post</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+
+						</div>
+
+					</div>
+
+
+
+				</div>
+
+			</div>
+
+			<!-- scripts -->
+			<!-- Modules -->
+			<script src="js/app.js"></script>
+
+			<!-- Controllers -->
+			<script src="js/controllers/MainController.js"></script>
+			<script src="js/controllers/PostController.js"></script>
+			<script src="js/controllers/EditController.js"></script>
+
+			<!-- Service -->
+			<script src="js/services/Blogit.js"></script>
+
+		</body>
+		</html>
+		
+
+
+
+
+
+
